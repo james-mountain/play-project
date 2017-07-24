@@ -51,6 +51,22 @@ class Application extends Controller {
     Ok("Second Action")
   }
 
+  def getCookieAction: Action[AnyContent] = Action {
+    Ok("Obtained a cookie").withCookies(Cookie("testcookie", "cookiedata"))
+  }
+
+  def printCookieAction: Action[AnyContent] = Action { implicit request =>
+    request.cookies.get("testcookie").map {data =>
+      Ok("Cookie found: " + data.toString)
+    }.getOrElse {
+      BadRequest("No cookie found.")
+    }
+  }
+
+  def revokedCookieAction: Action[AnyContent] = Action {
+    Ok("Revoked cookie").discardingCookies(DiscardingCookie("testcookie"))
+  }
+
   def redirectionToGenericName: Action[AnyContent] = Action {
     Redirect(routes.Application.print("genericname"))
   }

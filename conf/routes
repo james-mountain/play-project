@@ -20,5 +20,10 @@ GET     /unfinishedpage             controllers.Application.unfinishedPage
 GET     /sameroute                  controllers.Application.firstAction
 GET     /sameroute                  controllers.Application.secondAction
 
+GET     /google                     controllers.Default.redirect(to = "http://www.google.com")
+GET     /defnotfound                controllers.Default.notFound
+GET     /deferror                   controllers.Default.error
+GET     /deftodo                    controllers.Default.todo
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

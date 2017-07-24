@@ -17,5 +17,8 @@ GET     /internalerror              controllers.Application.internalServerError
 GET     /teapot                     controllers.Application.teapot
 GET     /unfinishedpage             controllers.Application.unfinishedPage
 
+GET     /sameroute                  controllers.Application.firstAction
+GET     /sameroute                  controllers.Application.secondAction
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

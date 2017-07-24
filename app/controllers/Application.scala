@@ -43,6 +43,14 @@ class Application extends Controller {
 
   def unfinishedPage: Action[AnyContent] = TODO
 
+  def firstAction: Action[AnyContent] = Action {
+    Ok("First Action")
+  }
+
+  def secondAction: Action[AnyContent] = Action {
+    Ok("Second Action")
+  }
+
   def redirectionToGenericName: Action[AnyContent] = Action {
     Redirect(routes.Application.print("genericname"))
   }

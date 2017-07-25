@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, serif;
+    background-color: snow;
+}
+
+.info {
+    font-size: 17px;
+    font-weight: bold;
+    color: #222222;
+    background-color: whitesmoke;
+    padding: 20px;
+}
+.pagewrap {
+    width: 30%;
+}
+
+h1 {
+    padding-left: 20px;
+    font-size: 30px;
+    border-bottom: thick dashed;
+    background-color: gainsboro;
+}

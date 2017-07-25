@@ -12,7 +12,7 @@ GET     /ensuredname                controllers.Application.print(name = "ensure
 GET     /option                     controllers.Application.optionalPrint(option: Option[String])
 
 GET     /notfound                   controllers.Application.notFoundAction
-GET     /badrequest                 controllers.Application.badRequest
+GET     /badrequest                 controllers.Application.badRequest(requestMessage : Option[String])
 GET     /internalerror              controllers.Application.internalServerError
 GET     /teapot                     controllers.Application.teapot
 GET     /unfinishedpage             controllers.Application.unfinishedPage

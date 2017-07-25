@@ -26,15 +26,15 @@ class Application extends Controller {
   }
 
   def notFoundAction : Action[AnyContent] = Action {
-    NotFound(<h1>Not Found!</h1>).as(HTML)
+    NotFound(views.html.notfound())
   }
 
-  def badRequest : Action[AnyContent] = Action {
-    BadRequest(<h1>Bad Request!</h1>).as(HTML)
+  def badRequest(requestMessage : Option[String]) : Action[AnyContent] = Action {
+    BadRequest(views.html.badreq(requestMessage.getOrElse("Unknown bad request.")))
   }
 
   def internalServerError : Action[AnyContent] = Action {
-    InternalServerError(<h1>Internal Server Error!</h1>).as(HTML)
+    InternalServerError(views.html.intserverror())
   }
 
   def teapot : Action[AnyContent] = Action {
@@ -59,7 +59,7 @@ class Application extends Controller {
     request.cookies.get("testcookie").map {data =>
       Ok("Cookie found: " + data.toString)
     }.getOrElse {
-      BadRequest("No cookie found.")
+      Redirect(routes.Application.badRequest(Some("No cookie data found.")))
     }
   }
 
@@ -75,7 +75,7 @@ class Application extends Controller {
     request.session.get("sessiondata").map {data =>
       Ok("Session data found: " + data)
     }.getOrElse {
-      BadRequest("No session data set.")
+      Redirect(routes.Application.badRequest(Some("No session data found.")))
     }
   }
 

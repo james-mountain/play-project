@@ -51,38 +51,6 @@ class Application extends Controller {
     Ok("Second Action")
   }
 
-  def getCookieAction: Action[AnyContent] = Action {
-    Ok("Obtained a cookie").withCookies(Cookie("testcookie", "cookiedata"))
-  }
-
-  def printCookieAction: Action[AnyContent] = Action { implicit request =>
-    request.cookies.get("testcookie").map {data =>
-      Ok("Cookie found: " + data.toString)
-    }.getOrElse {
-      Redirect(routes.Application.badRequest(Some("No cookie data found.")))
-    }
-  }
-
-  def revokedCookieAction: Action[AnyContent] = Action {
-    Ok("Revoked cookie").discardingCookies(DiscardingCookie("testcookie"))
-  }
-
-  def addToSessionAction: Action[AnyContent] = Action {
-    Ok("Added to session").withSession("sessiondata" -> "somedataforsession")
-  }
-
-  def printSessionContentsAction: Action[AnyContent] = Action { implicit request =>
-    request.session.get("sessiondata").map {data =>
-      Ok("Session data found: " + data)
-    }.getOrElse {
-      Redirect(routes.Application.badRequest(Some("No session data found.")))
-    }
-  }
-
-  def removeFromSessionAction: Action[AnyContent] = Action { implicit request =>
-    Ok("Removed data from session").withSession(request.session - "sessiondata")
-  }
-
   def redirectionToGenericName: Action[AnyContent] = Action {
     Redirect(routes.Application.print("genericname"))
   }

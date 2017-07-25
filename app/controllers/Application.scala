@@ -11,11 +11,11 @@ class Application extends Controller {
   }
 
   def staticprint : Action[AnyContent] = Action {
-    Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be"))
+    Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))
   }
 
   def print(name : String) : Action[AnyContent] = Action {
-    Ok(views.html.message("Hello", "Hello " + name))
+    Ok(views.html.message("Hello", "Hello " + name + "!"))
   }
 
   def optionalPrint(option : Option[String]) : Action[AnyContent] = Action {

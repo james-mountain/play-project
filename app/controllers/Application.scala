@@ -7,7 +7,7 @@ class Application extends Controller {
   val teapotCode = 418
 
   def index: Action[AnyContent] = Action {
-    Ok("Hello World")
+    Ok(views.html.index())
   }
 
   def staticprint : Action[AnyContent] = Action {

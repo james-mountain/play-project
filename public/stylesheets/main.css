@@ -3,6 +3,13 @@ body {
     background-color: snow;
 }
 
+h1 {
+    padding-left: 20px;
+    font-size: 30px;
+    border-bottom: thick dashed;
+    background-color: gainsboro;
+}
+
 .info {
     font-size: 17px;
     font-weight: bold;
@@ -12,11 +19,4 @@ body {
 }
 .pagewrap {
     width: 30%;
-}
-
-h1 {
-    padding-left: 20px;
-    font-size: 30px;
-    border-bottom: thick dashed;
-    background-color: gainsboro;
 }

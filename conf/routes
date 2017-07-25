@@ -8,7 +8,7 @@ GET     /redirectme                 controllers.Application.redirectionToGeneric
 GET     /people/                    controllers.Application.staticprint
 GET     /people/$name<[a-z]+>       controllers.Application.print(name: String)
 GET     /books                      controllers.Application.print(name: String ?= "book")
-GET     /ensuredname                controllers.Application.print(name = "ensuredname")
+GET     /ensuredname                controllers.Application.print(name: String = "ensuredname")
 GET     /option                     controllers.Application.optionalPrint(option: Option[String])
 
 GET     /notfound                   controllers.Application.notFoundAction
@@ -19,7 +19,6 @@ GET     /unfinishedpage             controllers.Application.unfinishedPage
 
 GET     /sameroute                  controllers.Application.firstAction
 GET     /sameroute                  controllers.Application.secondAction
-
 GET     /google                     controllers.Default.redirect(to = "http://www.google.com")
 GET     /defnotfound                controllers.Default.notFound
 GET     /deferror                   controllers.Default.error

@@ -21,10 +21,10 @@ function cookieRedisplay(result) {
 function sessionRedisplay(result) {
     if (result.message === "success") {
         $("#hidewrap").show(animtime, nilfunc);
-        $("#hiddenmessage").html("Session data: " + result.sessiondata);
+        $("#hiddenmessage").html("Username data: " + result.username);
     } else {
         $("#hidewrap").show(animtime, nilfunc);
-        $("#hiddenmessage").html("No session data found!");
+        $("#hiddenmessage").html("No session username data found!");
     }
 }
 
@@ -65,12 +65,19 @@ function removeCookieRequest() {
 }
 
 function getSessionRequest() {
+    var usernameInput = prompt("Please enter your username:", "");
+
     $.ajax({
         url: "/addtosession",
-        type: "GET",
+        type: "POST",
+        data: JSON.stringify({
+            "username" : usernameInput
+        }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
-                successMessage(result, "Successfully added data to session.");
+                successMessage(result, "Successfully added username data to session.");
             });
         }
     });
@@ -94,7 +101,7 @@ function removeSessionDataRequest() {
         type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
-                successMessage(result, "Removed data from session.");
+                successMessage(result, "Removed username data from session.");
             });
         }
     });

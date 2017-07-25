@@ -1,6 +1,7 @@
 package controllers
 
 import play.api._
+import play.api.libs.json.Json
 import play.api.mvc._
 
 class Application extends Controller {
@@ -10,8 +11,12 @@ class Application extends Controller {
     Ok(views.html.index())
   }
 
-  def staticprint : Action[AnyContent] = Action {
-    Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))
+  def staticprint : Action[AnyContent] = Action { implicit request =>
+    request.session.get("username").map {data =>
+      Ok(views.html.message("Hello", "Hello " + data + "!"))
+    }.getOrElse {
+      Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))
+    }
   }
 
   def print(name : String) : Action[AnyContent] = Action {

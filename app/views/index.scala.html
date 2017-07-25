@@ -3,6 +3,9 @@
         <h1>Play Project</h1>
         <p class="info">These are the various routes which have been created.</p>
     </div>
+    <div class="hiddenwrap" id="hidewrap">
+        <p class="info" id="hiddenmessage"></p>
+    </div>
     <div class="contentwrap">
         <div class="binding">
             <div class="info">
@@ -14,6 +17,7 @@
                 <li><a href="/books">/books</a></li>
                 <li><a href="/ensuredname">/ensuredname</a></li>
                 <li><a href="/option">/option</a></li>
+                <li><a href="/option?option=present">/option?option=present</a></li>
             </ul>
         </div>
         <div class="binding">
@@ -45,9 +49,9 @@
                 <h2>Cookie Pages</h2>
             </div>
             <ul class="info">
-                <li><a href="/getnewcookie">/getnewcookie</a></li>
-                <li><a href="/showcookie">/showcookie</a></li>
-                <li><a href="/revokecookie">/revokecookie</a></li>
+                <li><a onclick="getCookieRequest()" href="#">/getnewcookie</a></li>
+                <li><a onclick="showCookieRequest()" href="#">/showcookie</a></li>
+                <li><a onclick="removeCookieRequest()" href="#">/revokecookie</a></li>
             </ul>
         </div>
         <div class="binding">

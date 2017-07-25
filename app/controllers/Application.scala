@@ -11,17 +11,17 @@ class Application extends Controller {
   }
 
   def staticprint : Action[AnyContent] = Action {
-    Ok("Hello whoever that may be")
+    Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be"))
   }
 
   def print(name : String) : Action[AnyContent] = Action {
-    Ok("Hello " + name)
+    Ok(views.html.message("Hello", "Hello " + name))
   }
 
   def optionalPrint(option : Option[String]) : Action[AnyContent] = Action {
     option match {
-      case Some(str) => Ok("Option found: " + str)
-      case None => Ok("No option found!")
+      case Some(str) => Ok(views.html.message("Option Found", "Option found: " + str))
+      case None => Ok(views.html.message("No Option Found", "No option found!"))
     }
   }
 
@@ -38,17 +38,17 @@ class Application extends Controller {
   }
 
   def teapot : Action[AnyContent] = Action {
-    Status(teapotCode)(<h1>Teapot!</h1>).as(HTML)
+    Status(teapotCode)(views.html.message("Teapot Request!", "Teapot request found."))
   }
 
   def unfinishedPage: Action[AnyContent] = TODO
 
   def firstAction: Action[AnyContent] = Action {
-    Ok("First Action")
+    Ok(views.html.message("First Action", "The first action was called."))
   }
 
   def secondAction: Action[AnyContent] = Action {
-    Ok("Second Action")
+    Ok(views.html.message("Second Action", "The second action was called."))
   }
 
   def redirectionToGenericName: Action[AnyContent] = Action {

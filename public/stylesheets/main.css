@@ -22,13 +22,16 @@ h2 {
     background-color: whitesmoke;
     padding: 15px;
     text-align: center;
+    margin: 5px;
 }
 
 .binding {
     display: inline-block;
     padding-left: 10px;
     padding-right: 10px;
-    width: 200px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 250px;
 }
 
 .pagewrap {
@@ -37,8 +40,15 @@ h2 {
     margin-right: auto;
 }
 
+.hiddenwrap {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}
+
 .contentwrap {
-    width: 700px;
+    width: 900px;
     margin-left: auto;
     margin-right: auto;
 }

@@ -4,12 +4,19 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 
 class SessionController extends Controller {
+  val usernames = List("Peter", "Test", "Alex")
+
   def addToSessionAction: Action[AnyContent] = Action { implicit request =>
     val body: AnyContent = request.body
     val jsonBody: Option[JsValue] = body.asJson
 
-    jsonBody.map { json =>
-      Ok(Json.obj("message" -> "success")).withSession("username" -> (json \ "username").as[String])
+    jsonBody.map { json => {
+      if (usernames.contains((json \ "username").as[String])) {
+        Ok(Json.obj("message" -> "success")).withSession("username" -> (json \ "username").as[String])
+      } else {
+        Ok(Json.obj("message" -> "failure"))
+      }
+    }
     }.getOrElse {
       BadRequest(views.html.badreq("No application/json request body"))
     }

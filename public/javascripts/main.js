@@ -28,6 +28,16 @@ function sessionRedisplay(result) {
     }
 }
 
+function getSessionUsernameDisplay(result) {
+    if (result.message === "success") {
+        $("#hidewrap").show(animtime, nilfunc);
+        $("#hiddenmessage").html("Successfully added username data to session.");
+    } else {
+        $("#hidewrap").show(animtime, nilfunc);
+        $("#hiddenmessage").html("No username data found for session!");
+    }
+}
+
 function getCookieRequest() {
     $.ajax({
         url: "/getnewcookie",
@@ -77,7 +87,7 @@ function getSessionRequest() {
         dataType: "json",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
-                successMessage(result, "Successfully added username data to session.");
+                getSessionUsernameDisplay(result);
             });
         }
     });

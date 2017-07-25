@@ -10,17 +10,43 @@ h1 {
     background-color: gainsboro;
 }
 
+h2 {
+    font-size: 24px;
+    margin: 0px;
+}
+
 .info {
     font-size: 17px;
     font-weight: bold;
     color: #222222;
     background-color: whitesmoke;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
 }
 
+.binding {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 200px;
+}
+
 .pagewrap {
-    width: 30%;
+    width: 500px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.contentwrap {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.backmarker {
+    text-align: right;
+    margin-left: auto;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: thin dashed;
 }

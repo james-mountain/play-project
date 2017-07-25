@@ -31,11 +31,11 @@ function sessionRedisplay(result) {
 function getCookieRequest() {
     $.ajax({
         url: "/getnewcookie",
-        type: 'GET',
+        type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
                 successMessage(result, "Successfully got new cookie.");
-            })
+            });
         }
     });
 }
@@ -43,11 +43,11 @@ function getCookieRequest() {
 function showCookieRequest() {
     $.ajax({
         url: "/showcookie",
-        type: 'GET',
+        type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
                 cookieRedisplay(result);
-            })
+            });
         }
     });
 }
@@ -55,11 +55,11 @@ function showCookieRequest() {
 function removeCookieRequest() {
     $.ajax({
         url: "/revokecookie",
-        type: 'GET',
+        type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
                 successMessage(result, "Revoked cookie.");
-            })
+            });
         }
     });
 }
@@ -67,11 +67,11 @@ function removeCookieRequest() {
 function getSessionRequest() {
     $.ajax({
         url: "/addtosession",
-        type: 'GET',
+        type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
                 successMessage(result, "Successfully added data to session.");
-            })
+            });
         }
     });
 }
@@ -79,11 +79,11 @@ function getSessionRequest() {
 function showSessionDataRequest() {
     $.ajax({
         url: "/showsessiondata",
-        type: 'GET',
+        type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
                 sessionRedisplay(result);
-            })
+            });
         }
     });
 }
@@ -91,11 +91,11 @@ function showSessionDataRequest() {
 function removeSessionDataRequest() {
     $.ajax({
         url: "/removefromsession",
-        type: 'GET',
+        type: "GET",
         success: function(result) {
             $("#hidewrap").hide(animtime, function() {
                 successMessage(result, "Removed data from session.");
-            })
+            });
         }
     });
 }

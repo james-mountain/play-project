@@ -5,10 +5,10 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /redirectme                 controllers.Application.redirectionToGenericName
-GET     /people                     controllers.Application.staticprint
-GET     /people/$name<[a-z]+>       controllers.Application.print(name: String)
-GET     /books                      controllers.Application.print(name: String ?= "book")
-GET     /ensuredname                controllers.Application.print(name: String = "ensuredname")
+GET     /people                     controllers.Application.userConditionalPrint
+GET     /people/$name<[a-z]+>       controllers.Application.dynamicPrint(name: String)
+GET     /books                      controllers.Application.dynamicPrint(name: String ?= "book")
+GET     /ensuredname                controllers.Application.dynamicPrint(name: String = "ensuredname")
 GET     /option                     controllers.Application.optionalPrint(option: Option[String])
 
 GET     /notfound                   controllers.Application.notFoundAction

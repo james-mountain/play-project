@@ -1,7 +1,5 @@
 package controllers
 
-import play.api._
-import play.api.libs.json.Json
 import play.api.mvc._
 
 class Application extends Controller {
@@ -11,16 +9,18 @@ class Application extends Controller {
     Ok(views.html.index())
   }
 
-  def staticprint : Action[AnyContent] = Action { implicit request =>
+  def helloResult(personName : String): Result = Ok(views.html.message("Hello", "Hello " + personName + "!"))
+
+  def userConditionalPrint: Action[AnyContent] = Action { implicit request =>
     request.session.get("username").map {data =>
-      Ok(views.html.message("Hello", "Hello " + data + "!"))
+      helloResult(data)
     }.getOrElse {
       Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))
     }
   }
 
-  def print(name : String) : Action[AnyContent] = Action {
-    Ok(views.html.message("Hello", "Hello " + name + "!"))
+  def dynamicPrint(name : String) : Action[AnyContent] = Action {
+    helloResult(name)
   }
 
   def optionalPrint(option : Option[String]) : Action[AnyContent] = Action {
@@ -57,7 +57,7 @@ class Application extends Controller {
   }
 
   def redirectionToGenericName: Action[AnyContent] = Action {
-    Redirect(routes.Application.print("genericname"))
+    Redirect(routes.Application.dynamicPrint("genericname"))
   }
 
 }

@@ -117,12 +117,12 @@ function removeSessionDataRequest() {
     });
 }
 
-function deleteInventoryItemRequest(name) {
+function deleteInventoryItemRequest(id) {
     $.ajax({
-        url: "/inventoryitems/" + name,
+        url: "/inventoryitems/" + id,
         type: "DELETE",
         success: function(result) {
-            location.reload()
+            location.reload();
         }
     });
 }

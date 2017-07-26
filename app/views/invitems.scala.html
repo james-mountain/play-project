@@ -1,37 +1,43 @@
-@(invitems: List[InventoryItem], form: Form[InventoryItem], notify : Option[String])(implicit messages: Messages)
+@(invitems: List[InventoryItem], form: Form[InventoryItem], inspectID : Option[Int])(implicit messages: Messages)
 
 @main("Inventory Items") {
     <div class="pagewrap">
         <h1>Inventory Item Listing</h1>
     </div>
-
-    @notify.getOrElse("")
-
+    <div class="hiddenwrap" id="hidewrap">
+        <p class="infobox msatthi" id="hiddenmessage"></p>
+    </div>
     <div class="contentwrap">
         @for(invitem <- invitems) {
             <div class="binding">
                 <div class="infobox titlebox">
                     <h2>@invitem.name</h2>
                 </div>
-                <ul class="infobox">
-                    <li>@invitem.desc</li>
-                    <li>@invitem.manufacturer</li>
-                    <li>@invitem.warrantyLength</li>
-                    <li>@invitem.price</li>
-                    <li class="delmarker"><a onclick="deleteInventoryItemRequest('@invitem.name')" href="#">X</a></li>
+                <ul class="infobox inviteminfo">
+                    <li class="pricing">£@invitem.price.00</li>
+                    <li class="description">@invitem.desc</li>
+                    <hr>
+                    <li class="description">@invitem.manufacturer</li>
+                    <li class="description">@invitem.warrantyLength Months Warranty</li>
+                    <li class="editmarker"><a href="/inventoryitems/edit/@invitem.id">Edit</a></li>
+                    <li class="delmarker"><a onclick="deleteInventoryItemRequest(@invitem.id)" href="#">X</a></li>
                 </ul>
             </div>
         }
     </div>
     <div class="pagewrap">
         <div class="infobox">
-        @helper.form(routes.InventoryItemController.postFormAction()) {
+        @helper.form(routes.InventoryItemController.postFormAction(inspectID)) {
             @helper.inputText(form("name"), '_label -> "Name")
             @helper.inputText(form("desc"), '_label -> "Description")
             @helper.inputText(form("manufacturer"), '_label -> "Manufacturer")
             @helper.inputText(form("warrantyLength"), '_label -> "Warranty Months")
             @helper.inputText(form("price"), '_label -> "Price")
-            <button type="submit">Create Inventory Item</button>
+            <button type="submit">@if(inspectID.isDefined) {
+                Edit
+            } else {
+                Create
+            } Inventory Item</button>
         }
         </div>
         <div class="backmarker">

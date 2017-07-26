@@ -16,28 +16,39 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi) extends Co
     Ok(views.html.invitems(InventoryItem.inventoryItems.toList, InventoryItem.invItemForm, None))
   }
 
-  def removeInvItemByName(name : String): ListBuffer[InventoryItem] = {
-    InventoryItem.inventoryItems.find(invitem => invitem.name == name) match {
+  def removeInvItemByID(id : Int): ListBuffer[InventoryItem] = {
+    InventoryItem.inventoryItems.find(invitem => invitem.id == id) match {
       case Some(item) => InventoryItem.inventoryItems -= item
       case None => InventoryItem.inventoryItems;
     }
   }
 
-  def deleteInvItem(name : String): Action[AnyContent] = Action { implicit request =>
-    if (InventoryItem.inventoryItems.length != removeInvItemByName(name).length) {
+  def deleteInvItem(id : Int): Action[AnyContent] = Action { implicit request =>
+    if (InventoryItem.inventoryItems.length != removeInvItemByID(id).length) {
       Ok(views.html.invitems(InventoryItem.inventoryItems.toList, InventoryItem.invItemForm, None))
     } else {
       BadRequest(views.html.invitems(InventoryItem.inventoryItems.toList, InventoryItem.invItemForm, None))
     }
   }
 
-  def postFormAction: Action[AnyContent] = Action { implicit request =>
+  def startEditInvItem(id : Int) : Action[AnyContent] = Action { implicit request =>
+    InventoryItem.inventoryItems.find(invitem => invitem.id == id) match {
+      case Some(item) => Ok(views.html.invitems(InventoryItem.inventoryItems.toList, InventoryItem.invItemForm.fill(item), Some(id)))
+      case None => BadRequest(views.html.invitems(InventoryItem.inventoryItems.toList, InventoryItem.invItemForm, None))
+    }
+  }
+
+  def postFormAction(overrideID: Option[Int]): Action[AnyContent] = Action { implicit request =>
     val formValidationResult = InventoryItem.invItemForm.bindFromRequest
 
     formValidationResult.fold({ errorForm =>
-      BadRequest(views.html.invitems(InventoryItem.inventoryItems.toList, errorForm, None))
+      BadRequest(views.html.invitems(InventoryItem.inventoryItems.toList, errorForm, overrideID))
     }, { correctForm =>
-      InventoryItem.inventoryItems.append(correctForm)
+      overrideID match {
+        case Some(id) => InventoryItem.inventoryItems.update(InventoryItem.inventoryItems.indexWhere(item => item.id == id), correctForm)
+        case None => InventoryItem.inventoryItems.append(correctForm)
+      }
+
       Redirect(routes.InventoryItemController.listInventoryItems())
     })
   }

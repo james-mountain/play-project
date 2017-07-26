@@ -32,6 +32,10 @@ a:link, a:visited {
     color: crimson;
 }
 
+.editmarker a:link, .editmarker a:visited {
+    color: darkcyan;
+}
+
 .infobox {
     font-size: 16px;
     font-weight: bold;
@@ -97,9 +101,26 @@ a:link, a:visited {
     margin-left: auto;
     font-weight: bold;
     padding: 5px;
-    margin-top: -20px;
-    color: crimson;
+    margin-top: -5px;
     float: right;
+}
+
+.editmarker {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px;
+    margin-top: -5px;
+    float: left;
+}
+
+.description {
+    font-size: 80%;
+}
+
+.pricing {
+    font-size: 120%;
+    font-weight: bold;
+    color: darkgreen;
 }
 
 dt {
@@ -114,6 +135,16 @@ button {
     background-color: gainsboro;
 }
 
+hr {
+    border: none;
+    border-top: 2px solid #ddd;
+    margin: 5px;
+}
+
 .info {
     display: none;
+}
+
+.inviteminfo {
+    padding-bottom: 25px;
 }

@@ -3,13 +3,19 @@ package models
 import play.api.data.Form
 import play.api.data.Forms._
 
-import scalaz._
-import Scalaz._
 import scala.collection.mutable.ListBuffer
 
-case class InventoryItem(name: String, desc: String, manufacturer: String, warrantyLength: Int, price: Int)
+case class InventoryItem(id : Int, name: String, desc: String, manufacturer: String, warrantyLength: Int, price: Int)
 
 object InventoryItem {
+  def formApply(name: String, desc: String, manufacturer: String, warrantyLength: Int, price: Int): InventoryItem = {
+    InventoryItem(inventoryItems.length, name, desc, manufacturer, warrantyLength, price)
+  }
+
+  def formUnapply(invitem : InventoryItem): Option[(String, String, String, Int, Int)] = {
+    Some(invitem.name, invitem.desc, invitem.manufacturer, invitem.warrantyLength, invitem.price)
+  }
+
   val invItemForm = Form(
     mapping(
       "name" -> nonEmptyText,
@@ -17,12 +23,12 @@ object InventoryItem {
       "manufacturer" -> nonEmptyText,
       "warrantyLength" -> number,
       "price" -> number
-    )(InventoryItem.apply)(InventoryItem.unapply)
+    )(InventoryItem.formApply)(InventoryItem.formUnapply)
   )
 
   val inventoryItems = ListBuffer(
-    InventoryItem("Computer", "A personal computer.", "DELL", 24, 500),
-    InventoryItem("Mouse", "A computer mouse for usage with a computer", "Logitech", 3, 30),
-    InventoryItem("System", "A sound system.", "Sony", 24, 200)
+    InventoryItem(1, "Computer", "A personal computer.", "DELL", 24, 500),
+    InventoryItem(2, "Mouse", "A computer mouse for usage with a computer", "Logitech", 3, 30),
+    InventoryItem(3, "System", "A sound system.", "Sony", 24, 200)
   )
 }

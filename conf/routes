@@ -32,9 +32,10 @@ POST    /addtosession               controllers.SessionController.addToSessionAc
 GET     /showsessiondata            controllers.SessionController.printSessionContentsAction
 GET     /removefromsession          controllers.SessionController.removeFromSessionAction
 
-GET     /inventoryitems             controllers.InventoryItemController.listInventoryItems
-POST    /inventoryitems             controllers.InventoryItemController.postFormAction
-DELETE  /inventoryitems/$name<[a-zA-Z]+>           controllers.InventoryItemController.deleteInvItem(name : String)
+GET     /inventoryitems                         controllers.InventoryItemController.listInventoryItems
+GET     /inventoryitems/edit/$id<[0-9]+>        controllers.InventoryItemController.startEditInvItem(id : Int)
+POST    /inventoryitems                         controllers.InventoryItemController.postFormAction(option: Option[Int])
+DELETE  /inventoryitems/$id<[0-9]+>             controllers.InventoryItemController.deleteInvItem(id : Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

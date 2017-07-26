@@ -128,12 +128,12 @@ function deleteInventoryItemRequest(id) {
 }
 
 function makeFormAppear() {
-    $("#formcontainer").show(animtime, nilfunc)
+    $("#formcontainer").show(animtime, nilfunc);
 }
 
 function makeFormVanish() {
     $("#formcontainer").hide(animtime, function() {
         $("#hidewrap").show(animtime, nilfunc);
         $("#hiddenmessage").html("New inventory data submitted!");
-    })
+    });
 }

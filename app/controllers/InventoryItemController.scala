@@ -8,9 +8,6 @@ import play.api.mvc._
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  * Created by Administrator on 26/07/2017.
-  */
 class InventoryItemController @Inject()(val messagesApi: MessagesApi) extends Controller with I18nSupport {
   def listInventoryItems: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.invitems(InventoryItem.inventoryItems.toList, InventoryItem.invItemForm, None))

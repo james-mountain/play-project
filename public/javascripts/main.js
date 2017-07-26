@@ -126,3 +126,11 @@ function deleteInventoryItemRequest(id) {
         }
     });
 }
+
+function makeFormAppear() {
+    $("#formcontainer").show(animtime, nilfunc)
+}
+
+function makeFormVanish() {
+    $("#formcontainer").hide(animtime, nilfunc)
+}

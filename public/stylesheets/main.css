@@ -75,11 +75,25 @@ a:link, a:visited {
     margin-right: auto;
 }
 
+.pagewrap h3 {
+    text-align: center;
+    margin-left: 0;
+    margin-right: 50px;
+}
+
 .hiddenwrap {
     width: 500px;
     margin-left: auto;
     margin-right: auto;
     display: none;
+}
+
+.loosebinding {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 400px;
 }
 
 .contentwrap {
@@ -147,4 +161,8 @@ hr {
 
 .inviteminfo {
     padding-bottom: 25px;
+}
+
+#formcontainer {
+    display: none;
 }

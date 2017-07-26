@@ -26,22 +26,32 @@
         }
     </div>
     <div class="pagewrap">
-        <div class="infobox">
-        @helper.form(routes.InventoryItemController.postFormAction(inspectID)) {
-            @helper.inputText(form("name"), '_label -> "Name")
-            @helper.inputText(form("desc"), '_label -> "Description")
-            @helper.inputText(form("manufacturer"), '_label -> "Manufacturer")
-            @helper.inputText(form("warrantyLength"), '_label -> "Warranty Months")
-            @helper.inputText(form("price"), '_label -> "Price")
-            <button type="submit">@if(inspectID.isDefined) {
-                Edit
-            } else {
-                Create
-            } Inventory Item</button>
-        }
-        </div>
-        <div class="backmarker">
-            <a href="../">Back...</a>
+        <h3><a onclick="makeFormAppear()" href="#">Add New...</a></h3>
+        <div class="loosebinding" id="formcontainer">
+            <div class="infobox titlebox">
+                <h2>@if(inspectID.isDefined) {
+                    Editing Inventory Item<script src="@routes.Assets.at("javascripts/editinvitem.js")" type="text/javascript"></script>
+                } else {
+                    Create Inventory Item
+                }</h2>
+            </div>
+            <div class="infobox">
+            @helper.form(routes.InventoryItemController.postFormAction(inspectID)) {
+                @helper.inputText(form("name"), '_label -> "Name")
+                @helper.inputText(form("desc"), '_label -> "Description")
+                @helper.inputText(form("manufacturer"), '_label -> "Manufacturer")
+                @helper.inputText(form("warrantyLength"), '_label -> "Warranty Months")
+                @helper.inputText(form("price"), '_label -> "Price")
+                <button onclick="makeFormVanish()" type="submit">@if(inspectID.isDefined) {
+                    Edit
+                } else {
+                    Create
+                } Inventory Item</button>
+            }
+            </div>
+            <div class="backmarker">
+                <a href="../">Back...</a>
+            </div>
         </div>
     </div>
 }

@@ -28,6 +28,10 @@ a:link, a:visited {
     text-shadow: 1px 1px 4px #aaaaaa;
 }
 
+.delmarker a:link, .delmarker a:visited {
+    color: crimson;
+}
+
 .infobox {
     font-size: 16px;
     font-weight: bold;
@@ -86,6 +90,16 @@ a:link, a:visited {
     font-weight: bold;
     padding: 10px;
     border-bottom: thin dashed;
+}
+
+.delmarker {
+    text-align: right;
+    margin-left: auto;
+    font-weight: bold;
+    padding: 5px;
+    margin-top: -20px;
+    color: crimson;
+    float: right;
 }
 
 dt {

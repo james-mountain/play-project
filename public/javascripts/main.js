@@ -116,3 +116,13 @@ function removeSessionDataRequest() {
         }
     });
 }
+
+function deleteInventoryItemRequest(name) {
+    $.ajax({
+        url: "/inventoryitems/" + name,
+        type: "DELETE",
+        success: function(result) {
+            location.reload()
+        }
+    });
+}

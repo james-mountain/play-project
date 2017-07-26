@@ -1,19 +1,24 @@
-@(invitems: List[InventoryItem], form: Form[InventoryItem])(implicit messages: Messages)
+@(invitems: List[InventoryItem], form: Form[InventoryItem], notify : Option[String])(implicit messages: Messages)
 
 @main("Inventory Items") {
     <div class="pagewrap">
         <h1>Inventory Item Listing</h1>
     </div>
 
+    @notify.getOrElse("")
+
     <div class="contentwrap">
         @for(invitem <- invitems) {
             <div class="binding">
+                <div class="infobox titlebox">
+                    <h2>@invitem.name</h2>
+                </div>
                 <ul class="infobox">
-                    <li>@invitem.name</li>
                     <li>@invitem.desc</li>
                     <li>@invitem.manufacturer</li>
                     <li>@invitem.warrantyLength</li>
                     <li>@invitem.price</li>
+                    <li class="delmarker"><a onclick="deleteInventoryItemRequest('@invitem.name')" href="#">X</a></li>
                 </ul>
             </div>
         }

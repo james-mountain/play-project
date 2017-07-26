@@ -22,11 +22,7 @@ object InventoryItem {
 
   val inventoryItems = ListBuffer(
     InventoryItem("Computer", "A personal computer.", "DELL", 24, 500),
-    InventoryItem("Computer Mouse", "A computer mouse for usage with a computer", "Logitech", 3, 30),
-    InventoryItem("Sound System", "A sound system.", "Sony", 24, 200)
+    InventoryItem("Mouse", "A computer mouse for usage with a computer", "Logitech", 3, 30),
+    InventoryItem("System", "A sound system.", "Sony", 24, 200)
   )
-
-  def getInventoryItemsState(state : List[InventoryItem]) : List[InventoryItem] = {
-    state
-  }
 }

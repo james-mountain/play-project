@@ -35,16 +35,24 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi) extends Co
     }
   }
 
+  def processOverrideID(ovid : Option[Int], correctForm : InventoryItem) : Unit = ovid match {
+    case Some(oid) => {
+      val existingItemIndex = InventoryItem.inventoryItems.indexWhere(invitem => invitem.id == oid)
+      val newInvItem = InventoryItem.inventoryItems(existingItemIndex).copy(
+        oid, correctForm.name, correctForm.desc, correctForm.manufacturer, correctForm.warrantyLength, correctForm.price
+      )
+      InventoryItem.inventoryItems.update(existingItemIndex, newInvItem)
+    }
+    case None => InventoryItem.inventoryItems.append(correctForm)
+  }
+
   def postFormAction(overrideID: Option[Int]): Action[AnyContent] = Action { implicit request =>
     val formValidationResult = InventoryItem.invItemForm.bindFromRequest
 
     formValidationResult.fold({ errorForm =>
       BadRequest(views.html.invitems(InventoryItem.inventoryItems.toList, errorForm, overrideID))
     }, { correctForm =>
-      overrideID match {
-        case Some(id) => InventoryItem.inventoryItems.update(InventoryItem.inventoryItems.indexWhere(item => item.id == id), correctForm)
-        case None => InventoryItem.inventoryItems.append(correctForm)
-      }
+      processOverrideID(overrideID, correctForm)
 
       Redirect(routes.InventoryItemController.listInventoryItems())
     })

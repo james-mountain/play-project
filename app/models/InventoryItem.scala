@@ -8,8 +8,15 @@ import scala.collection.mutable.ListBuffer
 case class InventoryItem(id : Int, name: String, desc: String, manufacturer: String, warrantyLength: Int, price: Int)
 
 object InventoryItem {
+  def newIDToUse : Int = {
+    inventoryItems.lastOption match {
+      case Some(last) => last.id + 1;
+      case None => 0;
+    }
+  }
+
   def formApply(name: String, desc: String, manufacturer: String, warrantyLength: Int, price: Int): InventoryItem = {
-    InventoryItem(inventoryItems.length, name, desc, manufacturer, warrantyLength, price)
+    InventoryItem(newIDToUse, name, desc, manufacturer, warrantyLength, price)
   }
 
   def formUnapply(invitem : InventoryItem): Option[(String, String, String, Int, Int)] = {

@@ -132,5 +132,8 @@ function makeFormAppear() {
 }
 
 function makeFormVanish() {
-    $("#formcontainer").hide(animtime, nilfunc)
+    $("#formcontainer").hide(animtime, function() {
+        $("#hidewrap").show(animtime, nilfunc);
+        $("#hiddenmessage").html("New inventory data submitted!");
+    })
 }

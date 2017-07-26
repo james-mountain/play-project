@@ -1,7 +1,7 @@
 @main("Welcome to Play") {
     <div class="pagewrap">
         <h1>Play Project</h1>
-        <p class="info">
+        <p class="infobox">
             A demonstration of routes using the Play Framework...
         </p>
     </div>
@@ -10,12 +10,12 @@
     </div>
     <div class="contentwrap">
         <div class="binding">
-            <div class="info titlebox">
+            <div class="infobox titlebox">
                 <h2>Main Pages</h2>
             </div>
-            <ul class="info">
-                <li><a href="/redirectme">/redirectme</a></li>
+            <ul class="infobox">
                 <li><a href="/people">/people</a></li>
+                <li><a href="/inventoryitems">/inventoryitems</a></li>
                 <li><a href="/books">/books</a></li>
                 <li><a href="/ensuredname">/ensuredname</a></li>
                 <li><a href="/option">/option</a></li>
@@ -23,10 +23,10 @@
             </ul>
         </div>
         <div class="binding">
-            <div class="info titlebox">
+            <div class="infobox titlebox">
                 <h2>Utility Pages</h2>
             </div>
-            <ul class="info">
+            <ul class="infobox">
                 <li><a href="/notfound">/notfound</a></li>
                 <li><a href="/badrequest">/badrequest</a></li>
                 <li><a href="/internalerror">/internalerror</a></li>
@@ -35,32 +35,33 @@
             </ul>
         </div>
         <div class="binding">
-            <div class="info titlebox">
+            <div class="infobox titlebox">
                 <h2>Misc Pages</h2>
             </div>
-            <ul class="info">
-            <li><a href="/sameroute">/sameroute</a></li>
-            <li><a href="/google">/google</a></li>
-            <li><a href="/defnotfound">/defnotfound</a></li>
-            <li><a href="/deferror">/deferror</a></li>
-            <li><a href="/deftodo">/deftodo</a></li>
+            <ul class="infobox">
+                <li><a href="/redirectme">/redirectme</a></li>
+                <li><a href="/sameroute">/sameroute</a></li>
+                <li><a href="/google">/google</a></li>
+                <li><a href="/defnotfound">/defnotfound</a></li>
+                <li><a href="/deferror">/deferror</a></li>
+                <li><a href="/deftodo">/deftodo</a></li>
             </ul>
         </div>
         <div class="binding">
-            <div class="info titlebox">
+            <div class="infobox titlebox">
                 <h2>Cookie Pages</h2>
             </div>
-            <ul class="info">
+            <ul class="infobox">
                 <li><a onclick="getCookieRequest()" href="#">/getnewcookie</a></li>
                 <li><a onclick="showCookieRequest()" href="#">/showcookie</a></li>
                 <li><a onclick="removeCookieRequest()" href="#">/revokecookie</a></li>
             </ul>
         </div>
         <div class="binding">
-            <div class="info titlebox">
+            <div class="infobox titlebox">
                 <h2>Session Pages</h2>
             </div>
-            <ul class="info">
+            <ul class="infobox">
                 <li><a onclick="getSessionRequest()" href="#">/addtosession</a></li>
                 <li><a onclick="showSessionDataRequest()" href="#">/showsessiondata</a></li>
                 <li><a onclick="removeSessionDataRequest()" href="#">/removefromsession</a></li>

@@ -8,6 +8,8 @@ scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq( jdbc , cache , ws   , specs2 % Test )
 
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.14"
+
 wartremoverErrors in (Compile, compile) ++= Warts.unsafe
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

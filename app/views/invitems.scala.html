@@ -1,0 +1,36 @@
+@(invitems: List[InventoryItem], form: Form[InventoryItem])(implicit messages: Messages)
+
+@main("Inventory Items") {
+    <div class="pagewrap">
+        <h1>Inventory Item Listing</h1>
+    </div>
+
+    <div class="contentwrap">
+        @for(invitem <- invitems) {
+            <div class="binding">
+                <ul class="infobox">
+                    <li>@invitem.name</li>
+                    <li>@invitem.desc</li>
+                    <li>@invitem.manufacturer</li>
+                    <li>@invitem.warrantyLength</li>
+                    <li>@invitem.price</li>
+                </ul>
+            </div>
+        }
+    </div>
+    <div class="pagewrap">
+        <div class="infobox">
+        @helper.form(routes.InventoryItemController.postFormAction()) {
+            @helper.inputText(form("name"), '_label -> "Name")
+            @helper.inputText(form("desc"), '_label -> "Description")
+            @helper.inputText(form("manufacturer"), '_label -> "Manufacturer")
+            @helper.inputText(form("warrantyLength"), '_label -> "Warranty Months")
+            @helper.inputText(form("price"), '_label -> "Price")
+            <button type="submit">Create Inventory Item</button>
+        }
+        </div>
+        <div class="backmarker">
+            <a href="../">Back...</a>
+        </div>
+    </div>
+}

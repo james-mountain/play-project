@@ -46,13 +46,10 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
     val futureIDList : Future[List[InventoryItem]] = futureIDCursor.flatMap(_.collect[List]())
 
     futureIDList.flatMap {
-      idItems => idItems.headOption match {
-        case Some(item) => futureInventoryItems.map {
-          inventoryItems => Ok(views.html.invitems(inventoryItems, InventoryItem.invItemForm.fill(item), Some(id)))
-        }
-        case None => futureInventoryItems.map {
-          inventoryItems => BadRequest(views.html.invitems(inventoryItems, InventoryItem.invItemForm, None))
-        }
+      idItems => futureInventoryItems.map {
+        inventoryItems => idItems.headOption.fold(
+          BadRequest(views.html.invitems(inventoryItems, InventoryItem.invItemForm, None))
+        )(res => Ok(views.html.invitems(inventoryItems, InventoryItem.invItemForm.fill(res), Some(id))))
       }
     }
   }
@@ -75,10 +72,8 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
     _.update(Json.obj("id" -> ovid), correctForm.copy(id = ovid))
   }.map(_ => reload)
 
-  def processOverrideID(ovid : Option[Int], correctForm : InventoryItem) : Future[Result] = ovid match {
-    case Some(oid) => updateInvItem(oid, correctForm)
-    case None => insertNewInvItem(correctForm)
-  }
+  def processOverrideID(ovid : Option[Int], correctForm : InventoryItem) : Future[Result] =
+    ovid.fold(insertNewInvItem(correctForm))(oid => updateInvItem(oid, correctForm))
 
   def postFormAction(overrideID: Option[Int]): Action[AnyContent] = Action.async { implicit request =>
     val formValidationResult = InventoryItem.invItemForm.bindFromRequest

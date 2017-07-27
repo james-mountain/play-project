@@ -64,10 +64,7 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
   }
 
   def insertNewInvItem(correctForm : InventoryItem): Future[Result] = {
-    val highestID: Future[Int] = collection.flatMap(aggregateHighestID).map {
-      case Some(v) => v.as[Int] + 1
-      case None => 0
-    }
+    val highestID: Future[Int] = collection.flatMap(aggregateHighestID).map(lk => lk.fold(0)(res => res.as[Int] + 1))
 
     highestID.flatMap { highID =>
       collection.flatMap(_.insert(correctForm.copy(id = highID)).map(_ => reload))

@@ -60,10 +60,7 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
   def aggregateHighestID(col : JSONCollection): Future[Option[JsLookupResult]] = {
     import col.BatchCommands.AggregationFramework.{Group, MaxField}
 
-    col.aggregate(Group(JsNull)("highestID" -> MaxField("id"))).map(_.firstBatch.headOption match {
-      case Some(res) => Some(res \ "highestID")
-      case None => None
-    })
+    col.aggregate(Group(JsNull)("highestID" -> MaxField("id"))).map(_.firstBatch.headOption.map(res => res \ "highestID"))
   }
 
   def insertNewInvItem(correctForm : InventoryItem): Future[Result] = {

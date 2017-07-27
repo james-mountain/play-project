@@ -9,10 +9,8 @@ class CookieController extends Controller {
   }
 
   def printCookieAction: Action[AnyContent] = Action { implicit request =>
-    request.cookies.get("testcookie").map {data =>
+    request.cookies.get("testcookie").fold(Ok(Json.obj("message" -> "failure"))) { data =>
       Ok(Json.obj("message" -> "success", "cookiename" -> data.name, "cookievalue" -> data.value))
-    }.getOrElse {
-      Ok(Json.obj("message" -> "failure"))
     }
   }
 

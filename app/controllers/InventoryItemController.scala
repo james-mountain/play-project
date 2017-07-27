@@ -80,7 +80,7 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
   def updateInvItem(ovid : Int, correctForm : InventoryItem): Future[Result] = collection.map {
     _.update(Json.obj("id" -> ovid), correctForm.copy(id = ovid))
   }.map(_ => reload)
-  
+
   def processOverrideID(ovid : Option[Int], correctForm : InventoryItem) : Future[Result] = ovid match {
     case Some(oid) => updateInvItem(oid, correctForm)
     case None => insertNewInvItem(correctForm)

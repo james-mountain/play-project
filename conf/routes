@@ -28,9 +28,9 @@ GET     /getnewcookie               controllers.CookieController.getCookieAction
 GET     /showcookie                 controllers.CookieController.printCookieAction
 GET     /revokecookie               controllers.CookieController.revokedCookieAction
 
-POST    /addtosession               controllers.SessionController.addToSessionAction
+POST    /addtosession               controllers.SessionController.loginUserToSession
 GET     /showsessiondata            controllers.SessionController.printSessionContentsAction
-GET     /removefromsession          controllers.SessionController.removeFromSessionAction
+GET     /removefromsession          controllers.SessionController.logoutUserFromSession
 
 GET     /inventoryitems                         controllers.InventoryItemController.listInventoryItems
 GET     /inventoryitems/                        controllers.InventoryItemController.listInventoryItems

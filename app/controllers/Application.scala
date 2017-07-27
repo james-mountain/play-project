@@ -12,10 +12,8 @@ class Application extends Controller {
   def helloResult(personName : String): Result = Ok(views.html.message("Hello", "Hello " + personName + "!"))
 
   def userConditionalPrint: Action[AnyContent] = Action { implicit request =>
-    request.session.get("username").map {data =>
+    request.session.get("username").fold(Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))) { data =>
       helloResult(data)
-    }.getOrElse {
-      Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))
     }
   }
 

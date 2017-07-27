@@ -10,6 +10,8 @@ libraryDependencies ++= Seq( jdbc , cache , ws   , specs2 % Test )
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.14"
 
+libraryDependencies += "org.reactivemongo" %% "play2-reactivemongo" % "0.12.5-play25"
+
 wartremoverErrors in (Compile, compile) ++= Warts.unsafe
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

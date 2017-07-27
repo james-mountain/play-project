@@ -2,6 +2,7 @@ package models
 
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.libs.json.OFormat
 
 import scala.collection.mutable.ListBuffer
 
@@ -38,4 +39,10 @@ object InventoryItem {
     InventoryItem(2, "Mouse", "A computer mouse for usage with a computer", "Logitech", 3, 30),
     InventoryItem(3, "System", "A sound system.", "Sony", 24, 200)
   )
+}
+
+object InventoryItemJsonFormats {
+  import play.api.libs.json.Json
+
+  implicit val inventoryItemFormat: OFormat[InventoryItem] = Json.format[InventoryItem]
 }

@@ -16,7 +16,7 @@ import reactivemongo.play.json.collection.JSONCollection
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 
 class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reactiveMongoApi : ReactiveMongoApi)
   extends Controller with I18nSupport with MongoController with ReactiveMongoComponents {
@@ -51,8 +51,8 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
     futureIDList.flatMap {
       idItems => idItems.headOption match {
         case Some(item) => futureInventoryItems.map {
-            inventoryItems => Ok(views.html.invitems(inventoryItems, InventoryItem.invItemForm.fill(item), Some(id)))
-          }
+          inventoryItems => Ok(views.html.invitems(inventoryItems, InventoryItem.invItemForm.fill(item), Some(id)))
+        }
         case None => futureInventoryItems.map {
           inventoryItems => BadRequest(views.html.invitems(inventoryItems, InventoryItem.invItemForm, None))
         }
@@ -60,8 +60,27 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
     }
   }
 
-  def insertNewInvItem(correctForm : InventoryItem): Future[Result] =
-    collection.flatMap(_.insert(correctForm)).map(_ => reload)
+  def aggregateHighestID(col : JSONCollection): Future[Option[JsLookupResult]] = {
+    import col.BatchCommands.AggregationFramework.{
+      Group, MaxField
+    }
+
+    col.aggregate(Group(JsNull)("highestID" -> MaxField("id"))).map(_.firstBatch.headOption match {
+      case Some(res) => Some(res \ "highestID")
+      case None => None
+    })
+  }
+
+  def insertNewInvItem(correctForm : InventoryItem): Future[Result] = {
+    val highestID: Future[Int] = collection.flatMap(aggregateHighestID).map {
+      case Some(v) => v.as[Int] + 1
+      case None => 0
+    }
+
+    highestID.flatMap { highID =>
+      collection.flatMap(_.insert(correctForm.copy(id = highID)).map(_ => reload))
+    }
+  }
 
   def updateInvItem(ovid : Int, correctForm : InventoryItem): Future[Result] = collection.map {
     val updatevals = Json.obj(

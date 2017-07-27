@@ -3,8 +3,7 @@ package models
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json.OFormat
-
-import scala.collection.mutable.ListBuffer
+import play.api.libs.json.Json
 
 case class InventoryItem(id : Int, name: String, desc: String, manufacturer: String, warrantyLength: Int, price: Int)
 
@@ -26,10 +25,6 @@ object InventoryItem {
       "price" -> number
     )(InventoryItem.formApply)(InventoryItem.formUnapply)
   )
-}
-
-object InventoryItemJsonFormats {
-  import play.api.libs.json.Json
 
   implicit val inventoryItemFormat: OFormat[InventoryItem] = Json.format[InventoryItem]
 }

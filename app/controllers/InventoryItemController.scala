@@ -3,7 +3,6 @@ package controllers
 import javax.inject.Inject
 
 import models.InventoryItem
-import models.InventoryItemJsonFormats._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -14,9 +13,7 @@ import reactivemongo.api.Cursor
 import reactivemongo.api.commands.WriteResult
 import reactivemongo.play.json.collection.JSONCollection
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 
 class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reactiveMongoApi : ReactiveMongoApi)
   extends Controller with I18nSupport with MongoController with ReactiveMongoComponents {
@@ -61,9 +58,7 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
   }
 
   def aggregateHighestID(col : JSONCollection): Future[Option[JsLookupResult]] = {
-    import col.BatchCommands.AggregationFramework.{
-      Group, MaxField
-    }
+    import col.BatchCommands.AggregationFramework.{Group, MaxField}
 
     col.aggregate(Group(JsNull)("highestID" -> MaxField("id"))).map(_.firstBatch.headOption match {
       case Some(res) => Some(res \ "highestID")
@@ -83,17 +78,9 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
   }
 
   def updateInvItem(ovid : Int, correctForm : InventoryItem): Future[Result] = collection.map {
-    val updatevals = Json.obj(
-      "name" -> correctForm.name,
-      "desc" -> correctForm.desc,
-      "manufacturer" -> correctForm.manufacturer,
-      "price" -> correctForm.price,
-      "warrantyLength" -> correctForm.warrantyLength
-    )
-    _.update(Json.obj("id" -> ovid), Json.obj("$set" -> updatevals))
+    _.update(Json.obj("id" -> ovid), correctForm.copy(id = ovid))
   }.map(_ => reload)
-
-
+  
   def processOverrideID(ovid : Option[Int], correctForm : InventoryItem) : Future[Result] = ovid match {
     case Some(oid) => updateInvItem(oid, correctForm)
     case None => insertNewInvItem(correctForm)

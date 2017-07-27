@@ -23,9 +23,7 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
 
   implicit val inventoryItemWrites: OWrites[InventoryItem] = Json.writes[InventoryItem]
 
-  def inventoryItemsState : ListBuffer[InventoryItem] = InventoryItem.inventoryItems
   def reload : Result = Redirect(routes.InventoryItemController.listInventoryItems())
-
   def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("inventory"))
 
   def futureInventoryItems: Future[List[InventoryItem]] = {
@@ -62,9 +60,8 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
     }
   }
 
-  def insertNewInvItem(correctForm : InventoryItem): Future[Result] = collection.flatMap(_.insert(correctForm)).map{
-    _ => Redirect(routes.InventoryItemController.listInventoryItems())
-  }
+  def insertNewInvItem(correctForm : InventoryItem): Future[Result] =
+    collection.flatMap(_.insert(correctForm)).map(_ => reload)
 
   def updateInvItem(ovid : Int, correctForm : InventoryItem): Future[Result] = collection.map {
     val updatevals = Json.obj(
@@ -75,9 +72,8 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
       "warrantyLength" -> correctForm.warrantyLength
     )
     _.update(Json.obj("id" -> ovid), Json.obj("$set" -> updatevals))
-  }.map {
-    _ => Redirect(routes.InventoryItemController.listInventoryItems())
-  }
+  }.map(_ => reload)
+
 
   def processOverrideID(ovid : Option[Int], correctForm : InventoryItem) : Future[Result] = ovid match {
     case Some(oid) => updateInvItem(oid, correctForm)
@@ -88,7 +84,9 @@ class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reacti
     val formValidationResult = InventoryItem.invItemForm.bindFromRequest
 
     formValidationResult.fold({ errorForm =>
-      Future { BadRequest(views.html.invitems(inventoryItemsState.toList, errorForm, overrideID)) }
+      futureInventoryItems.map {
+        inventoryItems => BadRequest(views.html.invitems(inventoryItems, errorForm, overrideID))
+      }
     }, { correctForm =>
       processOverrideID(overrideID, correctForm)
     })

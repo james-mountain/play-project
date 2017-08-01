@@ -18,8 +18,6 @@ import scala.concurrent.Future
 class InventoryItemController @Inject()(val messagesApi: MessagesApi)(val reactiveMongoApi : ReactiveMongoApi)
   extends Controller with I18nSupport with MongoController with ReactiveMongoComponents {
 
-  implicit val inventoryItemWrites: OWrites[InventoryItem] = Json.writes[InventoryItem]
-
   def reload : Result = Redirect(routes.InventoryItemController.listInventoryItems())
   def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("inventory"))
 

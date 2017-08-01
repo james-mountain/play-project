@@ -16,6 +16,10 @@ GET     /badrequest                 controllers.Application.badRequest(requestMe
 GET     /internalerror              controllers.Application.internalServerError
 GET     /teapot                     controllers.Application.teapot
 GET     /unfinishedpage             controllers.Application.unfinishedPage
+GET     /servedrenamed              controllers.Application.serverRenamedFile
+GET     /codereviewpdf              controllers.Application.codeReviewPDFWithLength
+GET     /comet                      controllers.Application.cometPage
+GET     /comet/evens                controllers.Application.cometEvenNumbers
 
 GET     /sameroute                  controllers.Application.firstAction
 GET     /sameroute                  controllers.Application.secondAction

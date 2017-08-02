@@ -10,6 +10,8 @@ GET     /people/$name<[a-z]+>       controllers.Application.dynamicPrint(name: S
 GET     /books                      controllers.Application.dynamicPrint(name: String ?= "book")
 GET     /ensuredname                controllers.Application.dynamicPrint(name: String = "ensuredname")
 GET     /option                     controllers.Application.optionalPrint(option: Option[String])
+GET     /authrequest                controllers.Application.authRequest
+GET     /logauthreq                 controllers.Application.loggedAuthRequest
 
 GET     /notfound                   controllers.Application.notFoundAction
 GET     /badrequest                 controllers.Application.badRequest(requestMessage : Option[String])

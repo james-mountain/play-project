@@ -2,12 +2,14 @@ package controllers
 
 import javax.inject.Inject
 
+import utils.action.{AuthAction, LoggingAuthAction}
 import akka.stream.{Materializer, ThrottleMode}
 import akka.stream.scaladsl.{FileIO, Sink, Source}
 import akka.util.ByteString
 import play.api.http.{ContentTypes, HttpEntity}
 import play.api.libs.Comet
 import play.api.mvc._
+import play.mvc.Security.AuthenticatedAction
 
 import scala.concurrent.duration._
 
@@ -26,6 +28,14 @@ class Application @Inject()(materializer: Materializer) extends Controller {
     request.session.get("username").fold(Ok(views.html.message("Hello Unknown Person", "Hello whoever that may be."))) { data =>
       helloResult(data)
     }
+  }
+
+  def authRequest: Action[AnyContent] = AuthAction { implicit request =>
+    Ok(s"Hello ${request.user}")
+  }
+
+  def loggedAuthRequest: Action[AnyContent] = LoggingAuthAction.action { implicit request =>
+    Ok(s"Hello ${request.user}, this is a logged auth request!")
   }
 
   def dynamicPrint(name : String) : Action[AnyContent] = Action {
